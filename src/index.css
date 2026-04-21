@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #ecfdf5; /* HIJAU PASTEL */
+  margin: 0;
+  font-family: sans-serif;
+}
