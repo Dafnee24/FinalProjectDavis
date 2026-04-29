@@ -1,7 +1,7 @@
 /* eslint-env node */
 import express from 'express';
 import cors from 'cors';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,44 +12,47 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-// Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-// We will use gemini-1.5-flash since it's the standard for general chat
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// Initialize OpenAI client configured for Groq
+const groq = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY || process.env.API_KEY || process.env.GEMINI_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
+});
 
 app.post('/api/chat', async (req, res) => {
   try {
     const { messages, contextData } = req.body;
     
-    // Construct the prompt
-    let prompt = `You are a helpful AI data assistant for a sales dashboard. 
+    // Construct the system prompt
+    const systemPrompt = `You are a helpful AI data assistant for a sales dashboard. 
 You must answer questions based ONLY on the provided context data below. Do not use outside knowledge. 
 If the user asks something not related to the data, politely decline and say you can only answer questions about the dashboard data.
 
 Here is the current dashboard data context:
-${contextData}
+${contextData}`;
 
-Conversation History:
-`;
+    // Convert messages to Groq format (same as OpenAI format)
+    const apiMessages = [
+      { role: 'system', content: systemPrompt }
+    ];
 
-    // Append conversation history
     for (const msg of messages) {
       if (msg.type === 'user') {
-        prompt += `User: ${msg.text}\n`;
-      } else {
-        prompt += `Assistant: ${msg.text}\n`;
+        apiMessages.push({ role: 'user', content: msg.text });
+      } else if (msg.type === 'bot') {
+        apiMessages.push({ role: 'assistant', content: msg.text });
       }
     }
-    
-    prompt += `\nAssistant:`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const response = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: apiMessages,
+    });
+
+    const text = response.choices[0].message.content;
 
     res.json({ reply: text });
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
+    console.error("Error calling AI API:", error);
     res.status(500).json({ error: error.message || "Failed to generate response" });
   }
 });

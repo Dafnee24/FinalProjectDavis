@@ -1,15 +1,21 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import dotenv from 'dotenv';
 dotenv.config();
 
 async function test() {
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent("hello");
-    console.log(await result.response.text());
+    const groq = new OpenAI({
+      apiKey: process.env.GROQ_API_KEY,
+      baseURL: "https://api.groq.com/openai/v1",
+    });
+    
+    const response = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [{ role: "user", content: "hello" }],
+    });
+    console.log(response.choices[0].message.content);
   } catch (error) {
-    console.error("ERROR DETECTED:", error);
+    console.error("ERROR DETECTED:", error.message);
   }
 }
 test();
