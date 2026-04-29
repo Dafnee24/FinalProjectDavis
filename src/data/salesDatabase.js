@@ -64,6 +64,14 @@ export const salesData = [
   { Region: "South", Salesperson: "Eve",     Revenue: 66273,  Profit: 18740, Units_Sold: 834, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
   { Region: "South", Salesperson: "David",   Revenue: 75450,  Profit: 4744,  Units_Sold: 178, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
   { Region: "South", Salesperson: "Bob",     Revenue: 129246, Profit: 28810, Units_Sold: 82,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
+  { Region: "South", Salesperson: "Syeela",  Revenue: 177823, Profit: 5727,  Units_Sold: 765, Product_Category: "Furniture",   Sales_Channel: "Online"    },
+  { Region: "South", Salesperson: "Joshua",  Revenue: 184180, Profit: 17390, Units_Sold: 591, Product_Category: "Furniture",   Sales_Channel: "Online"    },
+  { Region: "South", Salesperson: "Dafnee",  Revenue: 36715,  Profit: 47558, Units_Sold: 201, Product_Category: "Furniture",   Sales_Channel: "Online"    },
+  { Region: "South", Salesperson: "Anggi",   Revenue: 88229,  Profit: 8927,  Units_Sold: 323, Product_Category: "Furniture",   Sales_Channel: "Online"    },
+  { Region: "South", Salesperson: "Jenifer", Revenue: 192684, Profit: 42216, Units_Sold: 88,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
+  { Region: "South", Salesperson: "Ayu",     Revenue: 66273,  Profit: 18740, Units_Sold: 834, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Putri",   Revenue: 75450,  Profit: 4744,  Units_Sold: 178, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Michelle",Revenue: 129246, Profit: 28810, Units_Sold: 82,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
 
   // --- WEST ---
   { Region: "West",  Salesperson: "Alice",   Revenue: 100373, Profit: 5033,  Units_Sold: 520, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
