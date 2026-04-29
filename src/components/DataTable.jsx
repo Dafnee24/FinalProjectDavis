@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { tableData } from "../data/chartData";
-import { MoreHorizontal, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function DataTable() {
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedData = showAll ? tableData : tableData.slice(0, 5);
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="p-6 border-b border-gray-50 flex justify-between items-center">
@@ -23,7 +28,7 @@ export default function DataTable() {
           </thead>
 
           <tbody className="divide-y divide-gray-50">
-            {tableData.map((item) => (
+            {displayedData.map((item) => (
               <tr key={item.id} className="group hover:bg-green-50/30 transition-colors cursor-pointer">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
@@ -55,8 +60,11 @@ export default function DataTable() {
       </div>
       
       <div className="p-4 bg-gray-50/50 border-t border-gray-50 flex justify-center">
-        <button className="text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
-          View all transactions
+        <button 
+          onClick={() => setShowAll(!showAll)}
+          className="text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
+        >
+          {showAll ? "View less" : "View all transactions"}
         </button>
       </div>
     </div>
