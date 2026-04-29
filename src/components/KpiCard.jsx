@@ -16,7 +16,7 @@ export default function KpiCard({ title, value, trend, icon: Icon, trendType = "
               }`}>
               {trendType === "up" ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
               <span>{trend}</span>
-              <span className="text-gray-400 font-normal ml-1"></span>
+              <span className="text-gray-400 font-normal ml-1">vs last month</span>
             </div>
           )}
         </div>

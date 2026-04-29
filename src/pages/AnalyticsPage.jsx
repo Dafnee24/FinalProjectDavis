@@ -5,63 +5,48 @@ import LineChartCard from "../components/LineChartCard";
 import BarChartCard  from "../components/BarChartCard";
 import PieChartCard  from "../components/PieChartCard";
 import DataTable     from "../components/DataTable";
+import { Filter, Calendar, Map, Tag, RotateCcw } from "lucide-react";
 import { 
   getSummaryStats, 
-  getFilteredData, 
   getRevenueTrend, 
   getBarChartData, 
   getProductDistribution,
   salesData
 } from "../data/salesDatabase";
 
-// Format angka ke string ringkas (ex: 1.2M, 850K)
 const fmt = (n) =>
   new Intl.NumberFormat("id-ID", {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(n);
 
-// Stat card kecil di bagian atas halaman
-function StatCard({ label, value, sub, color = "green" }) {
-  const ring = {
-    green:  "border-green-100 bg-green-50",
-    blue:   "border-blue-100  bg-blue-50",
-    purple: "border-purple-100 bg-purple-50",
-    amber:  "border-amber-100  bg-amber-50",
-  }[color];
-  const text = {
-    green:  "text-green-700",
-    blue:   "text-blue-700",
-    purple: "text-purple-700",
-    amber:  "text-amber-700",
+function MiniStat({ label, value, color }) {
+  const bg = {
+    indigo: "bg-indigo-50 border-indigo-100 text-indigo-700",
+    emerald: "bg-emerald-50 border-emerald-100 text-emerald-700",
+    violet: "bg-violet-50 border-violet-100 text-violet-700",
+    amber: "bg-amber-50 border-amber-100 text-amber-700",
   }[color];
 
   return (
-    <div className={`p-5 rounded-2xl border ${ring} flex flex-col gap-1 transition-all hover:shadow-md`}>
-      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
-        {label}
-      </p>
-      <p className={`text-2xl font-bold ${text}`}>{value}</p>
-      {sub && <p className="text-xs text-gray-400">{sub}</p>}
+    <div className={`p-4 rounded-xl border ${bg} flex flex-col`}>
+      <span className="text-[10px] uppercase font-bold opacity-60 tracking-wider mb-1">{label}</span>
+      <span className="text-xl font-bold">{value}</span>
     </div>
   );
 }
 
 export default function AnalyticsPage() {
-  // Extract unique values for filters from data
   const availableFilters = useMemo(() => {
     const categories = ["All", ...new Set(salesData.map(d => d.Product_Category))];
     const regions = ["All", ...new Set(salesData.map(d => d.Region))];
     const years = ["All", ...new Set(salesData.map(d => d.Date.split("-")[0]))];
     const months = ["All", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-    
-    // Convert month codes to names for UI
     const monthNames = {
       "All": "All Months", "01": "January", "02": "February", "03": "March", "04": "April",
       "05": "May", "06": "June", "07": "July", "08": "August", "09": "September",
       "10": "October", "11": "November", "12": "December"
     };
-
     return { categories, regions, years, months, monthNames };
   }, []);
 
@@ -70,7 +55,6 @@ export default function AnalyticsPage() {
   const [year, setYear] = useState("All");
   const [month, setMonth] = useState("All");
 
-  // Custom filter logic based on specific data structure
   const filteredData = useMemo(() => {
     return salesData.filter(row => {
       const [rYear, rMonth] = row.Date.split("-");
@@ -87,141 +71,119 @@ export default function AnalyticsPage() {
   const regionData = getBarChartData(filteredData);
   const distributionData = getProductDistribution(filteredData);
 
-  const resetFilters = () => {
-    setCategory("All");
-    setRegion("All");
-    setYear("All");
-    setMonth("All");
-  };
-
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-800">
+    <div className="flex min-h-screen bg-gray-100 text-gray-800">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white px-8 py-5 border-b border-gray-100 shadow-sm sticky top-0 z-10">
-          <Topbar title="Advanced Analytics" />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="bg-white px-8 py-5 border-b border-gray-200">
+          <Topbar title="Analysis Report" />
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 p-8 space-y-8">
-          
-          {/* Specific Filter Bar */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-            <div className="flex items-center justify-between border-b border-gray-50 pb-4">
-              <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Data Filters</h4>
-              {(category !== "All" || region !== "All" || year !== "All" || month !== "All") && (
-                <button 
-                  onClick={resetFilters}
-                  className="text-xs font-semibold text-red-500 hover:text-red-600 transition-colors"
-                >
-                  Clear All Filters
-                </button>
-              )}
+        <div className="flex flex-1 overflow-hidden">
+          {/* LEFT: CONTENT AREA */}
+          <main className="flex-1 overflow-y-auto p-8 space-y-8 bg-[#fcfcfd]">
+            {/* KPI STRIP */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <MiniStat label="Revenue" value={fmt(stats.totalRevenue)} color="indigo" />
+              <MiniStat label="Profit" value={fmt(stats.totalProfit)} color="emerald" />
+              <MiniStat label="Units" value={fmt(stats.totalUnitsSold)} color="violet" />
+              <MiniStat label="Row Count" value={stats.totalTransactions} color="amber" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Category */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Product Category</label>
+            <div className="grid grid-cols-1 gap-8">
+              {/* PRIMARY VISUALIZATION */}
+              <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                <LineChartCard data={revenueTrendData} />
+              </div>
+
+              {/* SECONDARY VISUALIZATIONS */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                  <BarChartCard data={regionData} />
+                </div>
+                <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                  <PieChartCard data={distributionData} />
+                </div>
+              </div>
+
+              {/* DATA LOG */}
+              <div className="pt-4">
+                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Detailed Logs</h3>
+                <DataTable />
+              </div>
+            </div>
+          </main>
+
+          {/* RIGHT: FILTER SIDEBAR */}
+          <aside className="w-72 bg-white border-l border-gray-200 p-6 space-y-8 overflow-y-auto hidden lg:block">
+            <div className="flex items-center gap-2 text-indigo-600 mb-2">
+              <Filter size={18} />
+              <h3 className="font-bold uppercase text-xs tracking-widest">Filters</h3>
+            </div>
+
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">
+                  <Tag size={12} /> Category
+                </label>
                 <select 
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="bg-gray-50 border border-gray-100 text-gray-700 text-sm rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none transition-all cursor-pointer"
+                  className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer"
                 >
-                  {availableFilters.categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
+                  {availableFilters.categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                 </select>
               </div>
 
-              {/* Region */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Region</label>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">
+                  <Map size={12} /> Region
+                </label>
                 <select 
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
-                  className="bg-gray-50 border border-gray-100 text-gray-700 text-sm rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none transition-all cursor-pointer"
+                  className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer"
                 >
-                  {availableFilters.regions.map(reg => (
-                    <option key={reg} value={reg}>{reg}</option>
-                  ))}
+                  {availableFilters.regions.map(reg => <option key={reg} value={reg}>{reg}</option>)}
                 </select>
               </div>
 
-              {/* Year */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Year</label>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">
+                  <Calendar size={12} /> Year
+                </label>
                 <select 
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="bg-gray-50 border border-gray-100 text-gray-700 text-sm rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none transition-all cursor-pointer"
+                  className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer"
                 >
-                  {availableFilters.years.map(y => (
-                    <option key={y} value={y}>{y}</option>
-                  ))}
+                  {availableFilters.years.map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
               </div>
 
-              {/* Month */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Month</label>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">
+                  <Calendar size={12} /> Month
+                </label>
                 <select 
                   value={month}
                   onChange={(e) => setMonth(e.target.value)}
-                  className="bg-gray-50 border border-gray-100 text-gray-700 text-sm rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none transition-all cursor-pointer"
+                  className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer"
                 >
-                  {availableFilters.months.map(m => (
-                    <option key={m} value={m}>{availableFilters.monthNames[m]}</option>
-                  ))}
+                  {availableFilters.months.map(m => <option key={m} value={m}>{availableFilters.monthNames[m]}</option>)}
                 </select>
               </div>
+
+              <button 
+                onClick={() => { setCategory("All"); setRegion("All"); setYear("All"); setMonth("All"); }}
+                className="w-full flex items-center justify-center gap-2 py-3 text-xs font-bold text-gray-400 border border-dashed border-gray-300 rounded-xl hover:border-indigo-400 hover:text-indigo-600 transition-all"
+              >
+                <RotateCcw size={14} /> Reset
+              </button>
             </div>
-          </div>
-
-          {/* Stat Cards Row */}
-          <div className="grid grid-cols-2 gap-5 xl:grid-cols-4">
-            <StatCard
-              label="Total Revenue"
-              value={fmt(stats.totalRevenue)}
-              sub={`${stats.totalTransactions} matching records`}
-              color="green"
-            />
-            <StatCard
-              label="Total Profit"
-              value={fmt(stats.totalProfit)}
-              sub={`Margin ${stats.totalRevenue > 0 ? ((stats.totalProfit / stats.totalRevenue) * 100).toFixed(1) : 0}%`}
-              color="blue"
-            />
-            <StatCard
-              label="Units Sold"
-              value={fmt(stats.totalUnitsSold)}
-              sub="Sales volume"
-              color="purple"
-            />
-            <StatCard
-              label="Transactions"
-              value={stats.totalTransactions}
-              sub="Sample count"
-              color="amber"
-            />
-          </div>
-
-          {/* Charts */}
-          <div className="space-y-8">
-            <LineChartCard data={revenueTrendData} />
-
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <BarChartCard data={regionData} />
-              <PieChartCard data={distributionData} />
-            </div>
-          </div>
-
-          {/* Data Table */}
-          <DataTable />
-
-        </main>
+          </aside>
+        </div>
       </div>
     </div>
   );
