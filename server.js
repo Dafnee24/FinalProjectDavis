@@ -19,7 +19,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     // MENGGUNAKAN MODEL gemini-2.0-flash YANG TERSEDIA DALAM AKAUN ANDA
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
     const response = await fetch(url, {
       method: 'POST',
@@ -57,4 +57,4 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('✅ Server Berjalan! Menggunakan model: gemini-2.0-flash'));
+app.listen(3000, () => console.log('✅ Server Berjalan! Menggunakan model: gemini-2.5-flash'));
