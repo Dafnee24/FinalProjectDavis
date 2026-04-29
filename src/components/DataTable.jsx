@@ -1,11 +1,46 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { tableData } from "../data/chartData";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
 export default function DataTable() {
   const [showAll, setShowAll] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  const displayedData = showAll ? tableData : tableData.slice(0, 5);
+  // Sorting logic
+  const sortedData = useMemo(() => {
+    let sortableData = [...tableData];
+    if (sortConfig.key !== null) {
+      sortableData.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableData;
+  }, [sortConfig]);
+
+  const displayedData = showAll ? sortedData : sortedData.slice(0, 5);
+
+  const requestSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return <ChevronsUpDown size={14} className="text-gray-300" />;
+    return sortConfig.direction === "asc" ? (
+      <ChevronUp size={14} className="text-green-600" />
+    ) : (
+      <ChevronDown size={14} className="text-green-600" />
+    );
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -20,10 +55,33 @@ export default function DataTable() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50/50">
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Product</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Category</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right">Sales</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-center">Status</th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("product")}
+              >
+                <div className="flex items-center gap-2">
+                  Product {getSortIcon("product")}
+                </div>
+              </th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("category")}
+              >
+                <div className="flex items-center gap-2">
+                  Category {getSortIcon("category")}
+                </div>
+              </th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("sales")}
+              >
+                <div className="flex items-center justify-end gap-2">
+                  Sales {getSortIcon("sales")}
+                </div>
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-center">
+                Status
+              </th>
             </tr>
           </thead>
 
