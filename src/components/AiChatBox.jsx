@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles } from "lucide-react";
+import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
+import { getSummaryStats, getRevenueTrend, getProductDistribution, getBarChartData, getChannelDistribution } from "../data/salesDatabase";
+import { tableData } from "../data/chartData";
 
 export default function AiChatBox({ fullScreen = false }) {
   const [messages, setMessages] = useState([
-
-    { text: "Hi! I'm your data assistant. How can I help you today? 📊", type: "bot" },
+    { text: "Hi! I'm your AI data assistant. I can help you analyze the dashboard data. How can I help you today? 📊", type: "bot" },
   ]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -15,22 +17,62 @@ export default function AiChatBox({ fullScreen = false }) {
     }
   }, [messages]);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim() || isLoading) return;
 
-    const userMessage = { text: input, type: "user" };
-    setMessages((prev) => [...prev, userMessage]);
-    
+    const userText = input;
+    const userMessage = { text: userText, type: "user" };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setInput("");
+    setIsLoading(true);
 
-    // Simulate bot thinking
-    setTimeout(() => {
-      const botResponse = {
-        text: "Analyzing current trends... Based on the data, revenue in the 'West' region has increased by 15% this quarter.",
-        type: "bot",
-      };
-      setMessages((prev) => [...prev, botResponse]);
-    }, 1000);
+    try {
+      // Prepare context data
+      const summaryStats = getSummaryStats();
+      const revenueTrend = getRevenueTrend();
+      const productDist = getProductDistribution();
+      const regionData = getBarChartData();
+      const channelDist = getChannelDistribution();
+
+      const contextData = `
+Summary Stats: ${JSON.stringify(summaryStats)}
+Top Salespeople by Revenue: ${JSON.stringify(revenueTrend.slice(0, 3))}
+Product Distribution: ${JSON.stringify(productDist)}
+Revenue by Region: ${JSON.stringify(regionData)}
+Revenue by Channel: ${JSON.stringify(channelDist)}
+Top Products from Table: ${JSON.stringify(tableData.slice(0, 5))}
+      `;
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: newMessages,
+          contextData
+        }),
+      });
+
+      if (!response.ok) {
+        let errMsg = 'Network response was not ok';
+        try {
+          const errData = await response.json();
+          errMsg = errData.error || errMsg;
+        } catch(e) {}
+        throw new Error(errMsg);
+      }
+
+      const data = await response.json();
+      
+      setMessages((prev) => [...prev, { text: data.reply, type: "bot" }]);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+      setMessages((prev) => [...prev, { text: `Sorry, I encountered an error: ${error.message}`, type: "bot" }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,12 +110,23 @@ export default function AiChatBox({ fullScreen = false }) {
             <div className={`relative max-w-[80%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
               msg.type === "user"
                 ? "bg-green-600 text-white rounded-tr-none"
-                : "bg-white text-gray-700 border border-gray-100 rounded-tl-none"
+                : "bg-white text-gray-700 border border-gray-100 rounded-tl-none whitespace-pre-wrap"
             }`}>
               {msg.text}
             </div>
           </div>
         ))}
+        {isLoading && (
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm bg-green-100 text-green-600 border border-green-200">
+              <Bot size={14} />
+            </div>
+            <div className="relative max-w-[80%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-gray-700 border border-gray-100 rounded-tl-none flex items-center gap-2">
+              <Loader2 size={16} className="animate-spin text-green-600" />
+              <span>Analyzing data...</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Input */}
@@ -89,10 +142,10 @@ export default function AiChatBox({ fullScreen = false }) {
 
           <button
             onClick={sendMessage}
-            disabled={!input.trim()}
+            disabled={!input.trim() || isLoading}
             className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:bg-gray-300 text-white w-10 h-10 rounded-lg flex items-center justify-center transition-all shadow-md active:scale-95"
           >
-            <Send size={18} />
+            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
           </button>
         </div>
       </div>
