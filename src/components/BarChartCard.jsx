@@ -26,8 +26,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function BarChartCard() {
-  const data = getBarChartData(); // [{ name, value }]
+export default function BarChartCard({ data: externalData }) {
+  const data = externalData || getBarChartData(); // [{ name, value }]
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">

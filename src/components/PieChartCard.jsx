@@ -43,8 +43,8 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent
   );
 };
 
-export default function PieChartCard() {
-  const data = getProductDistribution(); // [{ name, value }]
+export default function PieChartCard({ data: externalData }) {
+  const data = externalData || getProductDistribution(); // [{ name, value }]
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
