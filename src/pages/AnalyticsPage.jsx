@@ -1,110 +1,162 @@
+/* eslint-disable react-hooks/preserve-manual-memoization */
+import { useState, useMemo } from "react";
 import Sidebar       from "../components/Sidebar";
 import Topbar        from "../components/Topbar";
 import LineChartCard from "../components/LineChartCard";
 import BarChartCard  from "../components/BarChartCard";
 import PieChartCard  from "../components/PieChartCard";
 import DataTable     from "../components/DataTable";
-import AiChatBox     from "../components/AiChatBox";
-import { getSummaryStats } from "../data/salesDatabase";
+import CustomDropdown from "../components/CustomDropdown";
+import { Filter, Calendar, Map, Tag, RotateCcw, ChevronDown } from "lucide-react";
+import { 
+  getSummaryStats, 
+  getRevenueTrend, 
+  getBarChartData, 
+  getProductDistribution,
+  salesData
+} from "../data/salesDatabase";
 
-// Format angka ke string ringkas (ex: 1.2M, 850K)
 const fmt = (n) =>
   new Intl.NumberFormat("id-ID", {
     notation: "compact",
     maximumFractionDigits: 1,
-  }).format(n);
+  }).format(n || 0);
 
-// Stat card kecil di bagian atas halaman
-function StatCard({ label, value, sub, color = "green" }) {
-  const ring = {
-    green:  "border-green-100 bg-green-50",
-    blue:   "border-blue-100  bg-blue-50",
-    purple: "border-purple-100 bg-purple-50",
-    amber:  "border-amber-100  bg-amber-50",
-  }[color];
-  const text = {
-    green:  "text-green-700",
-    blue:   "text-blue-700",
-    purple: "text-purple-700",
-    amber:  "text-amber-700",
+function MiniStat({ label, value, color }) {
+  const bg = {
+    indigo: "bg-indigo-50 border-indigo-100 text-indigo-700",
+    emerald: "bg-emerald-50 border-emerald-100 text-emerald-700",
+    violet: "bg-violet-50 border-violet-100 text-violet-700",
+    amber: "bg-amber-50 border-amber-100 text-amber-700",
   }[color];
 
   return (
-    <div className={`p-5 rounded-2xl border ${ring} flex flex-col gap-1`}>
-      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
-        {label}
-      </p>
-      <p className={`text-2xl font-bold ${text}`}>{value}</p>
-      {sub && <p className="text-xs text-gray-400">{sub}</p>}
+    <div className={`p-4 rounded-xl border ${bg} flex flex-col`}>
+      <span className="text-[10px] uppercase font-bold opacity-60 tracking-wider mb-1">{label}</span>
+      <span className="text-xl font-bold">{value}</span>
     </div>
   );
 }
 
 export default function AnalyticsPage() {
-  const { totalRevenue, totalProfit, totalUnitsSold, totalTransactions } =
-    getSummaryStats();
+  const availableFilters = useMemo(() => {
+    const data = salesData || [];
+    const categories = ["All", ...new Set(data.map(d => d.Product_Category))];
+    const regions = ["All", ...new Set(data.map(d => d.Region))];
+    const years = ["2025"]; // Hanya menyediakan opsi tahun 2025
+    return { categories, regions, years };
+  }, []);
+
+  const [category, setCategory] = useState("All");
+  const [region, setRegion] = useState("All");
+  const [year, setYear] = useState("2025"); // Inisialisasi default ke 2025
+
+  const filteredData = useMemo(() => {
+    const data = salesData || [];
+    return data.filter(row => {
+      const [rYear] = (row.Date || "2025-01-01").split("-");
+      const matchCat = category === "All" || row.Product_Category === category;
+      const matchReg = region === "All" || row.Region === region;
+      const matchYear = rYear === year;
+      return matchCat && matchReg && matchYear;
+    });
+  }, [category, region, year]);
+  
+  const stats = getSummaryStats(filteredData) || { totalRevenue: 0, totalProfit: 0, totalUnitsSold: 0, totalTransactions: 0 };
+  const revenueTrendData = getRevenueTrend(filteredData) || [];
+  const regionData = getBarChartData(filteredData) || [];
+  const distributionData = getProductDistribution(filteredData) || [];
+
+  const tableDataFormatted = useMemo(() => {
+    return [...filteredData]
+      .sort((a, b) => new Date(b.Date || "2024-01-01") - new Date(a.Date || "2024-01-01"))
+      .map((item, index) => ({
+        id: `${item.Date || 'no-date'}-${index}`,
+        product: item.Salesperson, 
+        category: item.Product_Category,
+        sales: item.Revenue,
+      }));
+  }, [filteredData]);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-100 text-gray-800">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
-        {/* Topbar */}
-        <header className="bg-white px-8 py-5 border-b border-gray-100 shadow-sm">
-          <Topbar title="Analytics" />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="bg-white px-8 py-5 border-b border-gray-200">
+          <Topbar title="Analysis Report" />
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 p-8 space-y-8">
-
-          {/* Stat Cards Row */}
-          <div className="grid grid-cols-2 gap-5 xl:grid-cols-4">
-            <StatCard
-              label="Total Revenue"
-              value={fmt(totalRevenue)}
-              sub="From 80 sampled transactions"
-              color="green"
-            />
-            <StatCard
-              label="Total Profit"
-              value={fmt(totalProfit)}
-              sub={`Margin ${((totalProfit / totalRevenue) * 100).toFixed(1)}%`}
-              color="blue"
-            />
-            <StatCard
-              label="Units Sold"
-              value={fmt(totalUnitsSold)}
-              sub="Across all categories"
-              color="purple"
-            />
-            <StatCard
-              label="Transactions"
-              value={totalTransactions}
-              sub="Sample size (stratified)"
-              color="amber"
-            />
-          </div>
-
-          {/* Line Chart — full width */}
-          <LineChartCard />
-
-          {/* Bar + Pie — side by side */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <BarChartCard />
-            <PieChartCard />
-          </div>
-
-          {/* Data Table + AI Chat — side by side */}
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-            <div className="xl:col-span-2">
-              <DataTable />
+        <div className="flex flex-1 overflow-hidden">
+          <main className="flex-1 overflow-y-auto p-8 space-y-8 bg-[#fcfcfd]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <MiniStat label="Revenue" value={fmt(stats.totalRevenue)} color="indigo" />
+              <MiniStat label="Profit" value={fmt(stats.totalProfit)} color="emerald" />
+              <MiniStat label="Units" value={fmt(stats.totalUnitsSold)} color="violet" />
+              <MiniStat label="Row Count" value={stats.totalTransactions} color="amber" />
             </div>
-            <div>
-              <AiChatBox />
-            </div>
-          </div>
 
-        </main>
+            <div className="grid grid-cols-1 gap-8">
+              <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                <LineChartCard data={revenueTrendData} />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                  <BarChartCard data={regionData} />
+                </div>
+                <div className="bg-white p-2 rounded-3xl shadow-sm border border-gray-100">
+                  <PieChartCard data={distributionData} />
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Detailed Logs</h3>
+                <DataTable data={tableDataFormatted} />
+              </div>
+            </div>
+          </main>
+
+          <aside className="w-72 bg-white border-l border-gray-200 p-6 space-y-8 overflow-y-auto hidden lg:block">
+            <div className="flex items-center gap-2 text-indigo-600 mb-2">
+              <Filter size={18} />
+              <h3 className="font-bold uppercase text-xs tracking-widest">Filters</h3>
+            </div>
+
+            <div className="space-y-6">
+              <CustomDropdown
+                label="Category"
+                icon={Tag}
+                value={category}
+                onChange={setCategory}
+                options={availableFilters.categories}
+              />
+
+              <CustomDropdown
+                label="Region"
+                icon={Map}
+                value={region}
+                onChange={setRegion}
+                options={availableFilters.regions}
+              />
+
+              <CustomDropdown
+                label="Year"
+                icon={Calendar}
+                value={year}
+                onChange={setYear}
+                options={availableFilters.years}
+              />
+
+              <button 
+                onClick={() => { setCategory("All"); setRegion("All"); setYear("2025"); }}
+                className="w-full flex items-center justify-center gap-2 py-3 text-xs font-bold text-gray-400 border border-dashed border-gray-300 rounded-2xl hover:border-indigo-400 hover:text-indigo-600 transition-all"
+              >
+                <RotateCcw size={14} /> Reset
+              </button>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   );

@@ -1,99 +1,132 @@
 export const salesData = [
   // --- EAST ---
-  { Region: "East",  Salesperson: "Charlie", Revenue: 65419,  Profit: 22083, Units_Sold: 698, Product_Category: "Automobile",  Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "Alice",   Revenue: 108540, Profit: 34623, Units_Sold: 190, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "David",   Revenue: 52533,  Profit: 2140,  Units_Sold: 688, Product_Category: "Automobile",  Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "Eve",     Revenue: 166193, Profit: 19556, Units_Sold: 292, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Eve",     Revenue: 66447,  Profit: 29182, Units_Sold: 926, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "David",   Revenue: 108864, Profit: 35542, Units_Sold: 835, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "Bob",     Revenue: 128947, Profit: 35396, Units_Sold: 580, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Charlie", Revenue: 39725,  Profit: 21131, Units_Sold: 324, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "David",   Revenue: 135354, Profit: 17299, Units_Sold: 24,  Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Charlie", Revenue: 93369,  Profit: 45760, Units_Sold: 862, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Alice",   Revenue: 52963,  Profit: 30796, Units_Sold: 689, Product_Category: "Electronics", Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "David",   Revenue: 175937, Profit: 49695, Units_Sold: 965, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "David",   Revenue: 41401,  Profit: 2492,  Units_Sold: 684, Product_Category: "Furniture",   Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Charlie", Revenue: 36806,  Profit: 37593, Units_Sold: 91,  Product_Category: "Furniture",   Sales_Channel: "Retail"    },
-  { Region: "East",  Salesperson: "Charlie", Revenue: 137959, Profit: 10885, Units_Sold: 413, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "Alice",   Revenue: 157159, Profit: 40323, Units_Sold: 160, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "East",  Salesperson: "Eve",     Revenue: 127832, Profit: 18015, Units_Sold: 468, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Bob",     Revenue: 166921, Profit: 18921, Units_Sold: 793, Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "East",  Salesperson: "Alice",   Revenue: 54936,  Profit: 4134,  Units_Sold: 10,  Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-  { Region: "East",  Salesperson: "Eve",     Revenue: 133008, Profit: 24172, Units_Sold: 829, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-
-  // --- NORTH ---
-  { Region: "North", Salesperson: "Bob",     Revenue: 178876, Profit: 2589,  Units_Sold: 221, Product_Category: "Automobile",  Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Bob",     Revenue: 172728, Profit: 23031, Units_Sold: 429, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Charlie", Revenue: 86256,  Profit: 27917, Units_Sold: 173, Product_Category: "Automobile",  Sales_Channel: "Online"    },
-  { Region: "North", Salesperson: "Charlie", Revenue: 195763, Profit: 29365, Units_Sold: 737, Product_Category: "Automobile",  Sales_Channel: "Online"    },
-  { Region: "North", Salesperson: "Alice",   Revenue: 43662,  Profit: 32358, Units_Sold: 549, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "North", Salesperson: "Bob",     Revenue: 90818,  Profit: 4648,  Units_Sold: 861, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Bob",     Revenue: 114131, Profit: 3169,  Units_Sold: 462, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "North", Salesperson: "Alice",   Revenue: 142439, Profit: 28516, Units_Sold: 876, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Bob",     Revenue: 27633,  Profit: 45096, Units_Sold: 333, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Alice",   Revenue: 162889, Profit: 8016,  Units_Sold: 347, Product_Category: "Electronics", Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "David",   Revenue: 120384, Profit: 39814, Units_Sold: 70,  Product_Category: "Electronics", Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Alice",   Revenue: 170928, Profit: 24551, Units_Sold: 516, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Alice",   Revenue: 113896, Profit: 22447, Units_Sold: 283, Product_Category: "Furniture",   Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Alice",   Revenue: 110082, Profit: 39454, Units_Sold: 516, Product_Category: "Furniture",   Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "Charlie", Revenue: 166123, Profit: 16275, Units_Sold: 396, Product_Category: "Furniture",   Sales_Channel: "Wholesale" },
-  { Region: "North", Salesperson: "David",   Revenue: 36832,  Profit: 40233, Units_Sold: 175, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "North", Salesperson: "Bob",     Revenue: 117539, Profit: 34204, Units_Sold: 614, Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Charlie", Revenue: 106722, Profit: 17766, Units_Sold: 473, Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Eve",     Revenue: 119787, Profit: 4630,  Units_Sold: 93,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "North", Salesperson: "Alice",   Revenue: 130312, Profit: 3224,  Units_Sold: 304, Product_Category: "Grocery",     Sales_Channel: "Online"    },
-
-  // --- SOUTH ---
-  { Region: "South", Salesperson: "Alice",   Revenue: 16570,  Profit: 2283,  Units_Sold: 111, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Eve",     Revenue: 147328, Profit: 45757, Units_Sold: 284, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Charlie", Revenue: 36201,  Profit: 46486, Units_Sold: 628, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Charlie", Revenue: 155298, Profit: 6585,  Units_Sold: 811, Product_Category: "Automobile",  Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Charlie", Revenue: 110483, Profit: 16592, Units_Sold: 280, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Charlie", Revenue: 114792, Profit: 29011, Units_Sold: 203, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "David",   Revenue: 196749, Profit: 43849, Units_Sold: 113, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Alice",   Revenue: 147469, Profit: 42430, Units_Sold: 558, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Alice",   Revenue: 29033,  Profit: 41591, Units_Sold: 809, Product_Category: "Electronics", Sales_Channel: "Retail"    },
-  { Region: "South", Salesperson: "Eve",     Revenue: 110689, Profit: 34210, Units_Sold: 683, Product_Category: "Electronics", Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Charlie", Revenue: 51424,  Profit: 8597,  Units_Sold: 324, Product_Category: "Electronics", Sales_Channel: "Retail"    },
-  { Region: "South", Salesperson: "David",   Revenue: 126859, Profit: 49014, Units_Sold: 518, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Charlie", Revenue: 177823, Profit: 5727,  Units_Sold: 765, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Bob",     Revenue: 184180, Profit: 17390, Units_Sold: 591, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Bob",     Revenue: 36715,  Profit: 47558, Units_Sold: 201, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "Eve",     Revenue: 88229,  Profit: 8927,  Units_Sold: 323, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "South", Salesperson: "David",   Revenue: 192684, Profit: 42216, Units_Sold: 88,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "South", Salesperson: "Eve",     Revenue: 66273,  Profit: 18740, Units_Sold: 834, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "David",   Revenue: 75450,  Profit: 4744,  Units_Sold: 178, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-  { Region: "South", Salesperson: "Bob",     Revenue: 129246, Profit: 28810, Units_Sold: 82,  Product_Category: "Grocery",     Sales_Channel: "Retail"    },
+{ Region: "East", Salesperson: "Alice", Revenue: 137118, Profit: 10067, Units_Sold: 219, Product_Category: "Furniture", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Eve", Revenue: 166075, Profit: 10557, Units_Sold: 109, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "David", Revenue: 72768, Profit: 10435, Units_Sold: 40, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Eve", Revenue: 190858, Profit: 20675, Units_Sold: 338, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Eve", Revenue: 127832, Profit: 18015, Units_Sold: 468, Product_Category: "Grocery", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Bob", Revenue: 140406, Profit: 33591, Units_Sold: 831, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Charlie", Revenue: 135150, Profit: 29047, Units_Sold: 961, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Eve", Revenue: 167087, Profit: 35782, Units_Sold: 991, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Eve", Revenue: 144461, Profit: 6347, Units_Sold: 171, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "David", Revenue: 82715, Profit: 12929, Units_Sold: 244, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Alice", Revenue: 151398, Profit: 3539, Units_Sold: 236, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Eve", Revenue: 120091, Profit: 37727, Units_Sold: 534, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Eve", Revenue: 161094, Profit: 29228, Units_Sold: 574, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Charlie", Revenue: 80316, Profit: 27928, Units_Sold: 62, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Eve", Revenue: 120198, Profit: 23360, Units_Sold: 567, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "Alice", Revenue: 80326, Profit: 43891, Units_Sold: 686, Product_Category: "Grocery", Sales_Channel: "Wholesale" },
+  { Region: "East", Salesperson: "David", Revenue: 115361, Profit: 7304, Units_Sold: 991, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Alice", Revenue: 10661, Profit: 30300, Units_Sold: 877, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Bob", Revenue: 178484, Profit: 25259, Units_Sold: 407, Product_Category: "Grocery", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Bob", Revenue: 18946, Profit: 16352, Units_Sold: 930, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Bob", Revenue: 109259, Profit: 22008, Units_Sold: 197, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "East", Salesperson: "Charlie", Revenue: 124225, Profit: 13485, Units_Sold: 239, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Bob", Revenue: 82099, Profit: 14140, Units_Sold: 165, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Bob", Revenue: 166921, Profit: 18921, Units_Sold: 793, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "East", Salesperson: "Alice", Revenue: 138267, Profit: 49777, Units_Sold: 683, Product_Category: "Furniture", Sales_Channel: "Retail" },
 
   // --- WEST ---
-  { Region: "West",  Salesperson: "Alice",   Revenue: 100373, Profit: 5033,  Units_Sold: 520, Product_Category: "Automobile",  Sales_Channel: "Wholesale" },
-  { Region: "West",  Salesperson: "Charlie", Revenue: 26309,  Profit: 20446, Units_Sold: 120, Product_Category: "Automobile",  Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "Bob",     Revenue: 55033,  Profit: 37576, Units_Sold: 546, Product_Category: "Automobile",  Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "Bob",     Revenue: 74674,  Profit: 14565, Units_Sold: 992, Product_Category: "Automobile",  Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "Charlie", Revenue: 83445,  Profit: 48829, Units_Sold: 924, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "David",   Revenue: 94730,  Profit: 36205, Units_Sold: 695, Product_Category: "Clothing",    Sales_Channel: "Wholesale" },
-  { Region: "West",  Salesperson: "Eve",     Revenue: 61047,  Profit: 38766, Units_Sold: 907, Product_Category: "Clothing",    Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "Eve",     Revenue: 94045,  Profit: 17209, Units_Sold: 82,  Product_Category: "Clothing",    Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "Alice",   Revenue: 43320,  Profit: 10833, Units_Sold: 109, Product_Category: "Electronics", Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "Bob",     Revenue: 14703,  Profit: 48945, Units_Sold: 128, Product_Category: "Electronics", Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "Alice",   Revenue: 38671,  Profit: 2932,  Units_Sold: 528, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
-  { Region: "West",  Salesperson: "Charlie", Revenue: 162747, Profit: 9259,  Units_Sold: 676, Product_Category: "Electronics", Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "David",   Revenue: 27014,  Profit: 47087, Units_Sold: 970, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "David",   Revenue: 40841,  Profit: 3384,  Units_Sold: 175, Product_Category: "Furniture",   Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "David",   Revenue: 113892, Profit: 31750, Units_Sold: 257, Product_Category: "Furniture",   Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "David",   Revenue: 73449,  Profit: 23424, Units_Sold: 987, Product_Category: "Furniture",   Sales_Channel: "Wholesale" },
-  { Region: "West",  Salesperson: "Charlie", Revenue: 66088,  Profit: 7142,  Units_Sold: 196, Product_Category: "Grocery",     Sales_Channel: "Online"    },
-  { Region: "West",  Salesperson: "Alice",   Revenue: 125053, Profit: 45695, Units_Sold: 897, Product_Category: "Grocery",     Sales_Channel: "Wholesale" },
-  { Region: "West",  Salesperson: "Alice",   Revenue: 118899, Profit: 29099, Units_Sold: 261, Product_Category: "Grocery",     Sales_Channel: "Retail"    },
-  { Region: "West",  Salesperson: "Alice",   Revenue: 113409, Profit: 44553, Units_Sold: 102, Product_Category: "Grocery",     Sales_Channel: "Retail"    },
+{ Region: "West", Salesperson: "Alice", Revenue: 78577, Profit: 38481, Units_Sold: 750, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "West", Salesperson: "Eve", Revenue: 61047, Profit: 38766, Units_Sold: 907, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Alice", Revenue: 43320, Profit: 10833, Units_Sold: 109, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Bob", Revenue: 100827, Profit: 33972, Units_Sold: 864, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+  { Region: "West", Salesperson: "Bob", Revenue: 112215, Profit: 42800, Units_Sold: 182, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 167361, Profit: 31508, Units_Sold: 758, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Bob", Revenue: 34826, Profit: 19681, Units_Sold: 272, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Alice", Revenue: 110734, Profit: 39328, Units_Sold: 813, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "West", Salesperson: "Alice", Revenue: 21653, Profit: 37768, Units_Sold: 335, Product_Category: "Grocery", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 169033, Profit: 31682, Units_Sold: 949, Product_Category: "Clothing", Sales_Channel: "Wholesale" },
+  { Region: "West", Salesperson: "Eve", Revenue: 108818, Profit: 15289, Units_Sold: 497, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 46877, Profit: 12918, Units_Sold: 365, Product_Category: "Furniture", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 89148, Profit: 23669, Units_Sold: 58, Product_Category: "Grocery", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Eve", Revenue: 93186, Profit: 6432, Units_Sold: 127, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Eve", Revenue: 167817, Profit: 21644, Units_Sold: 63, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Eve", Revenue: 172962, Profit: 19745, Units_Sold: 659, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Alice", Revenue: 12356, Profit: 30055, Units_Sold: 534, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 102447, Profit: 17376, Units_Sold: 111, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "Eve", Revenue: 124994, Profit: 7588, Units_Sold: 801, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 26309, Profit: 20446, Units_Sold: 120, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Bob", Revenue: 121822, Profit: 10879, Units_Sold: 26, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "West", Salesperson: "Eve", Revenue: 111757, Profit: 45629, Units_Sold: 749, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Eve", Revenue: 180515, Profit: 46232, Units_Sold: 387, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "West", Salesperson: "Charlie", Revenue: 49063, Profit: 2633, Units_Sold: 867, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "West", Salesperson: "David", Revenue: 126400, Profit: 44617, Units_Sold: 842, Product_Category: "Clothing", Sales_Channel: "Online" },
+
+  // --- NORTH ---
+{ Region: "North", Salesperson: "Alice", Revenue: 19078, Profit: 28037, Units_Sold: 406, Product_Category: "Furniture", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "David", Revenue: 81626, Profit: 1162, Units_Sold: 537, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Eve", Revenue: 67660, Profit: 35742, Units_Sold: 658, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Bob", Revenue: 74881, Profit: 8896, Units_Sold: 630, Product_Category: "Furniture", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Alice", Revenue: 154701, Profit: 3643, Units_Sold: 737, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 91941, Profit: 33262, Units_Sold: 158, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Alice", Revenue: 43662, Profit: 32358, Units_Sold: 549, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Alice", Revenue: 105081, Profit: 2171, Units_Sold: 74, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Alice", Revenue: 121562, Profit: 42903, Units_Sold: 542, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Eve", Revenue: 156385, Profit: 40110, Units_Sold: 261, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Eve", Revenue: 30049, Profit: 26000, Units_Sold: 779, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Alice", Revenue: 26082, Profit: 8345, Units_Sold: 858, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "David", Revenue: 12920, Profit: 26470, Units_Sold: 147, Product_Category: "Clothing", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Bob", Revenue: 89561, Profit: 24017, Units_Sold: 684, Product_Category: "Grocery", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 65230, Profit: 3336, Units_Sold: 623, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Eve", Revenue: 142028, Profit: 7171, Units_Sold: 545, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Alice", Revenue: 188980, Profit: 19474, Units_Sold: 180, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Bob", Revenue: 90818, Profit: 4648, Units_Sold: 861, Product_Category: "Clothing", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 41585, Profit: 47136, Units_Sold: 474, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Bob", Revenue: 96652, Profit: 5666, Units_Sold: 754, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "David", Revenue: 135932, Profit: 11983, Units_Sold: 729, Product_Category: "Furniture", Sales_Channel: "Online" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 191749, Profit: 19133, Units_Sold: 493, Product_Category: "Clothing", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 108317, Profit: 1781, Units_Sold: 656, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "North", Salesperson: "Eve", Revenue: 111459, Profit: 19489, Units_Sold: 316, Product_Category: "Clothing", Sales_Channel: "Wholesale" },
+  { Region: "North", Salesperson: "Charlie", Revenue: 135818, Profit: 35881, Units_Sold: 340, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+
+  // --- SOUTH ---
+{ Region: "South", Salesperson: "Charlie", Revenue: 142997, Profit: 9461, Units_Sold: 175, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Eve", Revenue: 166755, Profit: 31314, Units_Sold: 914, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Alice", Revenue: 71550, Profit: 41785, Units_Sold: 785, Product_Category: "Grocery", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Charlie", Revenue: 167702, Profit: 16892, Units_Sold: 283, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Eve", Revenue: 187235, Profit: 48299, Units_Sold: 12, Product_Category: "Grocery", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Bob", Revenue: 108511, Profit: 18073, Units_Sold: 37, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Alice", Revenue: 197518, Profit: 8927, Units_Sold: 831, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Bob", Revenue: 162360, Profit: 49330, Units_Sold: 447, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Eve", Revenue: 142632, Profit: 46951, Units_Sold: 322, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Bob", Revenue: 133629, Profit: 35521, Units_Sold: 53, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Bob", Revenue: 193651, Profit: 32703, Units_Sold: 824, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Alice", Revenue: 38380, Profit: 19322, Units_Sold: 595, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Bob", Revenue: 186572, Profit: 34365, Units_Sold: 396, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "David", Revenue: 171099, Profit: 33316, Units_Sold: 789, Product_Category: "Grocery", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Alice", Revenue: 122340, Profit: 34340, Units_Sold: 191, Product_Category: "Electronics", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "David", Revenue: 69321, Profit: 8521, Units_Sold: 893, Product_Category: "Clothing", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Charlie", Revenue: 84131, Profit: 24481, Units_Sold: 550, Product_Category: "Automobile", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Alice", Revenue: 35963, Profit: 47760, Units_Sold: 418, Product_Category: "Furniture", Sales_Channel: "Retail" },
+  { Region: "South", Salesperson: "Charlie", Revenue: 172932, Profit: 15357, Units_Sold: 696, Product_Category: "Clothing", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "David", Revenue: 53585, Profit: 1097, Units_Sold: 613, Product_Category: "Furniture", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "David", Revenue: 134677, Profit: 13722, Units_Sold: 804, Product_Category: "Automobile", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Bob", Revenue: 186422, Profit: 13924, Units_Sold: 511, Product_Category: "Automobile", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Charlie", Revenue: 153273, Profit: 4750, Units_Sold: 702, Product_Category: "Electronics", Sales_Channel: "Wholesale" },
+  { Region: "South", Salesperson: "Alice", Revenue: 39426, Profit: 28733, Units_Sold: 691, Product_Category: "Electronics", Sales_Channel: "Online" },
+  { Region: "South", Salesperson: "Eve", Revenue: 27778, Profit: 9535, Units_Sold: 708, Product_Category: "Electronics", Sales_Channel: "Retail" },
 ];
 
 // ---------------------------------------------------------------------------
 // HELPER FUNCTIONS
 // ---------------------------------------------------------------------------
-export function getRevenueTrend() {
+export function getFilteredData(filters = {}) {
+  const { category, region, year, month } = filters;
+  return salesData.filter((row) => {
+    const [rYear, rMonth] = row.Date.split("-");
+    const matchCat = !category || category === "All" || row.Product_Category === category;
+    const matchReg = !region || region === "All" || row.Region === region;
+    const matchYear = !year || year === "All" || rYear === year;
+    const matchMonth = !month || month === "All" || rMonth === month;
+    return matchCat && matchReg && matchYear && matchMonth;
+  });
+}
+
+export function getRevenueTrend(data = salesData) {
   const map = {};
-  for (const row of salesData) {
+  for (const row of data) {
+    if (!row.Salesperson) continue;
     map[row.Salesperson] = (map[row.Salesperson] || 0) + row.Revenue;
   }
   return Object.entries(map)
@@ -101,9 +134,10 @@ export function getRevenueTrend() {
     .sort((a, b) => b.value - a.value);
 }
 
-export function getProductDistribution() {
+export function getProductDistribution(data = salesData) {
   const map = {};
-  for (const row of salesData) {
+  for (const row of data) {
+    if (!row.Product_Category) continue;
     map[row.Product_Category] = (map[row.Product_Category] || 0) + 1;
   }
   return Object.entries(map)
@@ -111,9 +145,10 @@ export function getProductDistribution() {
     .sort((a, b) => b.value - a.value);
 }
 
-export function getBarChartData() {
+export function getBarChartData(data = salesData) {
   const map = {};
-  for (const row of salesData) {
+  for (const row of data) {
+    if (!row.Region) continue;
     map[row.Region] = (map[row.Region] || 0) + row.Revenue;
   }
   return Object.entries(map)
@@ -121,12 +156,12 @@ export function getBarChartData() {
     .sort((a, b) => b.value - a.value);
 }
 
-export function getSummaryStats() {
-  const totals = salesData.reduce(
+export function getSummaryStats(data = salesData) {
+  const totals = data.reduce(
     (acc, row) => {
-      acc.totalRevenue    += row.Revenue;
-      acc.totalProfit     += row.Profit;
-      acc.totalUnitsSold  += row.Units_Sold;
+      acc.totalRevenue += row.Revenue || 0;
+      acc.totalProfit += row.Profit || 0;
+      acc.totalUnitsSold += row.Units_Sold || 0;
       acc.totalTransactions += 1;
       return acc;
     },
@@ -135,9 +170,10 @@ export function getSummaryStats() {
   return totals;
 }
 
-export function getChannelDistribution() {
+export function getChannelDistribution(data = salesData) {
   const map = {};
-  for (const row of salesData) {
+  for (const row of data) {
+    if (!row.Sales_Channel) continue;
     map[row.Sales_Channel] = (map[row.Sales_Channel] || 0) + row.Revenue;
   }
   return Object.entries(map)
