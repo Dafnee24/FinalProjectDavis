@@ -1,7 +1,46 @@
-import { tableData } from "../data/chartData";
-import { MoreHorizontal, ArrowUpRight } from "lucide-react";
+import { useState, useMemo } from "react";
+import { ArrowUpRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
-export default function DataTable() {
+export default function DataTable({ data = [] }) {
+  const [showAll, setShowAll] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  // Sorting logic menggunakan props data
+  const sortedData = useMemo(() => {
+    let sortableData = [...data];
+    if (sortConfig.key !== null) {
+      sortableData.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableData;
+  }, [data, sortConfig]);
+
+  const displayedData = showAll ? sortedData : sortedData.slice(0, 5);
+
+  const requestSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return <ChevronsUpDown size={14} className="text-gray-300" />;
+    return sortConfig.direction === "asc" ? (
+      <ChevronUp size={14} className="text-green-600" />
+    ) : (
+      <ChevronDown size={14} className="text-green-600" />
+    );
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="p-6 border-b border-gray-50 flex justify-between items-center">
@@ -9,24 +48,44 @@ export default function DataTable() {
           <h3 className="text-lg font-semibold text-gray-800">Recent Sales</h3>
           <p className="text-sm text-gray-400 mt-1">Overview of latest transactions</p>
         </div>
-        <button className="text-gray-400 hover:text-gray-600 transition-colors">
-          <MoreHorizontal size={20} />
-        </button>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50/50">
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Product</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Category</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right">Sales</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-center">Status</th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("product")}
+              >
+                <div className="flex items-center gap-2">
+                  Product {getSortIcon("product")}
+                </div>
+              </th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("category")}
+              >
+                <div className="flex items-center gap-2">
+                  Category {getSortIcon("category")}
+                </div>
+              </th>
+              <th 
+                className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => requestSort("sales")}
+              >
+                <div className="flex items-center justify-end gap-2">
+                  Sales {getSortIcon("sales")}
+                </div>
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-center">
+                Status
+              </th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-gray-50">
-            {tableData.map((item) => (
+            {displayedData.map((item) => (
               <tr key={item.id} className="group hover:bg-green-50/30 transition-colors cursor-pointer">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
@@ -58,11 +117,13 @@ export default function DataTable() {
       </div>
       
       <div className="p-4 bg-gray-50/50 border-t border-gray-50 flex justify-center">
-        <button className="text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
-          View all transactions
+        <button 
+          onClick={() => setShowAll(!showAll)}
+          className="text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
+        >
+          {showAll ? "View less" : "View all transactions"}
         </button>
       </div>
     </div>
   );
 }
-

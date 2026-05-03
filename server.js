@@ -1,7 +1,6 @@
-/* eslint-env node */
+/* eslint-disable no-undef */
 import express from 'express';
 import cors from 'cors';
-import OpenAI from 'openai';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,53 +9,52 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
-
-// Initialize OpenAI client configured for Groq
-const groq = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY || process.env.API_KEY || process.env.GEMINI_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1",
-});
-
 app.post('/api/chat', async (req, res) => {
   try {
-    const { messages, contextData } = req.body;
-    
-    // Construct the system prompt
-    const systemPrompt = `You are a helpful AI data assistant for a sales dashboard. 
-You must answer questions based ONLY on the provided context data below. Do not use outside knowledge. 
-If the user asks something not related to the data, politely decline and say you can only answer questions about the dashboard data.
+    const { message, contextData } = req.body;
+    const API_KEY = process.env.GEMINI_API_KEY;
 
-Here is the current dashboard data context:
-${contextData}`;
-
-    // Convert messages to Groq format (same as OpenAI format)
-    const apiMessages = [
-      { role: 'system', content: systemPrompt }
-    ];
-
-    for (const msg of messages) {
-      if (msg.type === 'user') {
-        apiMessages.push({ role: 'user', content: msg.text });
-      } else if (msg.type === 'bot') {
-        apiMessages.push({ role: 'assistant', content: msg.text });
-      }
+    if (!API_KEY) {
+      return res.status(500).json({ error: "API Key tidak ditemui dalam .env" });
     }
 
-    const response = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant",
-      messages: apiMessages,
+    // MENGGUNAKAN MODEL gemini-2.0-flash YANG TERSEDIA DALAM AKAUN ANDA
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Anda adalah asisten analisis data. 
+                  Data Revenue: $${contextData?.totalRevenue || 0}. 
+                  Pertanyaan: ${message}`
+          }]
+        }]
+      })
     });
 
-    const text = response.choices[0].message.content;
+    const data = await response.json();
 
-    res.json({ reply: text });
+    if (!response.ok) {
+      console.error("🚨 Error dari Google API:", data);
+      return res.status(response.status).json({ 
+        error: "Google API Error", 
+        details: data.error?.message || "Model tidak menyokong permintaan ini." 
+      });
+    }
+
+    // Mengambil teks daripada respon JSON Google
+    const aiResponse = data.candidates[0].content.parts[0].text;
+    res.json({ reply: aiResponse });
+
   } catch (error) {
-    console.error("Error calling AI API:", error);
-    res.status(500).json({ error: error.message || "Failed to generate response" });
+    console.error("🚨 Backend Crash:", error.message);
+    res.status(500).json({ error: "Server Error", details: error.message });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(3000, () => console.log('✅ Server Berjalan! Menggunakan model: gemini-2.5-flash'));
