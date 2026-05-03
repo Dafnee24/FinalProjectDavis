@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
 import { getSummaryStats, getRevenueTrend, getProductDistribution, getBarChartData, getChannelDistribution } from "../data/salesDatabase";
-import { tableData } from "../data/chartData";
 
 export default function AiChatBox({ fullScreen = false }) {
   const [messages, setMessages] = useState([
@@ -41,7 +40,6 @@ Top Salespeople by Revenue: ${JSON.stringify(revenueTrend.slice(0, 3))}
 Product Distribution: ${JSON.stringify(productDist)}
 Revenue by Region: ${JSON.stringify(regionData)}
 Revenue by Channel: ${JSON.stringify(channelDist)}
-Top Products from Table: ${JSON.stringify(tableData.slice(0, 5))}
       `;
 
       const response = await fetch('/api/chat', {

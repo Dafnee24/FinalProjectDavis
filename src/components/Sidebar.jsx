@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { LayoutDashboard, BarChart3, MessageSquare } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 

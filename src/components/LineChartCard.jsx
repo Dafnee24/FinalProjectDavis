@@ -31,8 +31,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function LineChartCard() {
-  const data = getRevenueTrend(); // [{ name, value }]
+export default function LineChartCard({ data: externalData }) {
+  const data = externalData || getRevenueTrend(); // [{ name, value }]
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
