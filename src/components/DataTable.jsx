@@ -59,7 +59,7 @@ export default function DataTable({ data = [] }) {
                 onClick={() => requestSort("product")}
               >
                 <div className="flex items-center gap-2">
-                  Product {getSortIcon("product")}
+                  Salesperson {getSortIcon("product")}
                 </div>
               </th>
               <th 
