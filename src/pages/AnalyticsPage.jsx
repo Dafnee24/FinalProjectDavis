@@ -6,8 +6,9 @@ import LineChartCard from "../components/LineChartCard";
 import BarChartCard  from "../components/BarChartCard";
 import PieChartCard  from "../components/PieChartCard";
 import DataTable     from "../components/DataTable";
+import KpiCard       from "../components/KpiCard";
 import CustomDropdown from "../components/CustomDropdown";
-import { Filter, Calendar, Map, Tag, RotateCcw, ChevronDown } from "lucide-react";
+import { Filter, Calendar, Map, Tag, RotateCcw, ChevronDown, DollarSign, ShoppingCart, Users, Activity } from "lucide-react";
 import { 
   getSummaryStats, 
   getRevenueTrend, 
@@ -22,21 +23,7 @@ const fmt = (n) =>
     maximumFractionDigits: 1,
   }).format(n || 0);
 
-function MiniStat({ label, value, color }) {
-  const bg = {
-    indigo: "bg-indigo-50 border-indigo-100 text-indigo-700",
-    emerald: "bg-emerald-50 border-emerald-100 text-emerald-700",
-    violet: "bg-violet-50 border-violet-100 text-violet-700",
-    amber: "bg-amber-50 border-amber-100 text-amber-700",
-  }[color];
 
-  return (
-    <div className={`p-4 rounded-xl border ${bg} flex flex-col`}>
-      <span className="text-[10px] uppercase font-bold opacity-60 tracking-wider mb-1">{label}</span>
-      <span className="text-xl font-bold">{value}</span>
-    </div>
-  );
-}
 
 export default function AnalyticsPage() {
   const availableFilters = useMemo(() => {
@@ -89,11 +76,11 @@ export default function AnalyticsPage() {
 
         <div className="flex flex-1 overflow-hidden">
           <main className="flex-1 overflow-y-auto p-8 space-y-8 bg-[#fcfcfd]">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <MiniStat label="Revenue" value={fmt(stats.totalRevenue)} color="indigo" />
-              <MiniStat label="Profit" value={fmt(stats.totalProfit)} color="emerald" />
-              <MiniStat label="Units" value={fmt(stats.totalUnitsSold)} color="violet" />
-              <MiniStat label="Row Count" value={stats.totalTransactions} color="amber" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <KpiCard title="Revenue" value={fmt(stats.totalRevenue)} icon={DollarSign} trend="+12.5%" trendType="up" color="indigo" />
+              <KpiCard title="Profit" value={fmt(stats.totalProfit)} icon={Activity} trend="+14.3%" trendType="up" color="emerald" />
+              <KpiCard title="Units Sold" value={fmt(stats.totalUnitsSold)} icon={Users} trend="+8.1%" trendType="up" color="violet" />
+              <KpiCard title="Transactions" value={stats.totalTransactions.toLocaleString("id-ID")} icon={ShoppingCart} trend="+5.2%" trendType="up" color="amber" />
             </div>
 
             <div className="grid grid-cols-1 gap-8">

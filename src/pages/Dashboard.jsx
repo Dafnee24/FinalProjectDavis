@@ -67,6 +67,7 @@ export default function Dashboard() {
               icon={DollarSign} 
               trend="+12.5%" 
               trendType="up" 
+              color="indigo"
             />
             <KpiCard 
               title="Transactions" 
@@ -74,6 +75,7 @@ export default function Dashboard() {
               icon={ShoppingCart} 
               trend="+5.2%" 
               trendType="up" 
+              color="amber"
             />
             <KpiCard 
               title="Units Sold" 
@@ -81,6 +83,7 @@ export default function Dashboard() {
               icon={Users} 
               trend="+8.1%" 
               trendType="up" 
+              color="violet"
             />
             <KpiCard 
               title="Total Profit" 
@@ -88,6 +91,7 @@ export default function Dashboard() {
               icon={Activity} 
               trend="+14.3%" 
               trendType="up" 
+              color="emerald"
             />
           </div>
 
